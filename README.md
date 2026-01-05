@@ -106,25 +106,20 @@ To generate reports locally:
 # Run tests and generate Allure results
 pytest test_hello.py --alluredir=allure-results -v
 
-# Generate HTML report (requires Java/Allure CLI installed)
-allure generate allure-results --clean -o allure-report
-allure open allure-report
+# Generate single-file HTML report (no server needed!)
+allure generate allure-results --single-file --clean -o allure-report
+
+# Open directly in browser
+start allure-report/index.html  # Windows
+# or double-click index.html
 ```
 
 ### GitHub Actions Reports
+- **On Push/PR**: Test results are archived as artifacts for 30 days
+- **Artifact**: Download `allure-report` ZIP and extract
+- **Open**: Double-click `index.html` - works directly in browser!
 
-**Downloading and Viewing Artifacts:**
-1. Go to Actions tab and select the workflow run
-2. Download `allure-report` artifact
-3. Extract the ZIP file
-4. Open the report using Python HTTP server:
-   ```bash
-   cd path/to/extracted/allure-report
-   python -m http.server 8000
-   ```
-5. Open browser: `http://localhost:8000`
-
-**Note:** The Allure report requires a web server due to JavaScript security restrictions. Direct opening of `index.html` won't work properly.
+**Note:** With `--single-file` flag, the Allure report is self-contained and can be opened directly without a web server.
 
 ## 📝 Configuration
 
