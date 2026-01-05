@@ -24,19 +24,27 @@ jobs:
       run: pytest test_hello.py --alluredir=allure-results -v
       continue-on-error: true
 
-    - name: Generate Allure Report
-      uses: simple-elf/allure-report-action@master
-      if: always()
+    - name: Checkout GitHub Pages
+      uses: actions/checkout@v4
       continue-on-error: true
       with:
-        allure_results: allure-results
-        allure_history: allure-history
-        keep_reports: 20
+        ref: gh-pages
+        path: gh-pages-dir
 
-    - name: Upload Allure report as artifact
-      uses: actions/upload-artifact@v4
+    - name: Generate Allure Report
+      uses: andgineer/allure-report@v3.6
+      id: allure-report
       if: always()
       with:
-        name: allure-report
-        path: allure-history
-        retention-days: 30
+        allure-results: allure-results
+        website: gh-pages-dir
+        reports-site-path: reports
+
+    - name: Publish Allure Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: gh-pages-dir
+        destination_dir: ${{ steps.allure-report.outputs.reports-site-path }}
