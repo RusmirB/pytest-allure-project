@@ -26,7 +26,7 @@ jobs:
 
     - name: Generate Allure HTML Report
       if: always()
-      run: allure-combine allure-results --dest allure-report.html
+      run: allure-combine allure-results --dest allure-report.html --auto-create-folders
 
     - name: Upload Allure Report as Artifact
       uses: actions/upload-artifact@v4
