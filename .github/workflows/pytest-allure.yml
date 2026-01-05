@@ -24,27 +24,22 @@ jobs:
       run: pytest test_hello.py --alluredir=allure-results -v
       continue-on-error: true
 
-    - name: Checkout GitHub Pages
-      uses: actions/checkout@v4
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages-dir
+    - name: Download Allure CLI
+      run: |
+        curl -o allure-2.21.0.zip -L https://github.com/allure-framework/allure2/releases/download/2.21.0/allure-2.21.0.zip
+        unzip allure-2.21.0.zip
+        export PATH=$PATH:$(pwd)/allure-2.21.0/bin
 
     - name: Generate Allure Report
-      uses: andgineer/allure-report@v3.6
-      id: allure-report
       if: always()
-      with:
-        allure-results: allure-results
-        website: gh-pages-dir
-        reports-site-path: reports
+      run: |
+        export PATH=$PATH:$(pwd)/allure-2.21.0/bin
+        allure generate allure-results --clean -o allure-report
 
-    - name: Publish Allure Report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Upload Allure Report as Artifact
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: gh-pages-dir
-        destination_dir: ${{ steps.allure-report.outputs.reports-site-path }}
+        name: allure-report
+        path: allure-report/
+        retention-days: 30
