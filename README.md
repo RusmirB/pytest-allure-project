@@ -5,9 +5,9 @@ A comprehensive testing project demonstrating pytest with Allure reporting and G
 ## 📋 Project Overview
 
 This project showcases:
-- ✅ Basic pytest test cases
-- ✅ Allure report decorators and steps
-- ✅ HTML test reports (pytest-html)
+- ✅ Basic pytest test cases with Allure reporting
+- ✅ Allure decorators (feature, story, severity, title)
+- ✅ Allure steps and attachments in tests
 - ✅ GitHub Actions CI/CD automation
 - ✅ Allure report artifacts and GitHub Pages deployment
 
@@ -29,27 +29,22 @@ cd pytest-allure-project
 
 2. **Install dependencies:**
 ```bash
-pip install pytest allure-pytest pytest-html
+pip install pytest allure-pytest
 ```
 
 ### Running Tests Locally
 
 **Run all tests:**
 ```bash
-pytest test_hello.py -v -s
+pytest test_hello.py -v
 ```
 
 **Run tests with Allure results:**
 ```bash
-pytest test_hello.py --alluredir=allure-results -v -s
+pytest test_hello.py --alluredir=allure-results -v
 ```
 
-**Generate HTML report (pytest-html):**
-```bash
-pytest test_hello.py -v -s --html=report.html --self-contained-html
-```
-
-Then open `report.html` in your browser.
+**Note:** One test (`test_intentional_fail`) is designed to fail - this demonstrates how the Allure report handles test failures.
 
 ## 📁 Project Structure
 
@@ -66,27 +61,27 @@ pytest-allure-project/
 
 ## 🧪 Test Cases
 
-The project includes 4 test cases:
+The project includes 4 comprehensive test cases with full Allure integration:
 
-1. **test_hello_world()** - Basic assertion test with Allure steps
-2. **test_simple_math()** - Math operation test with calculation and attachment
-3. **test_string_operations()** - String validation test
+1. **test_hello_world()** - Hello World test with Allure steps and attachments
+2. **test_simple_math()** - Math operation test with calculation results
+3. **test_string_operations()** - String validation with detailed reporting
 4. **test_intentional_fail()** - Intentionally failing test (demonstrates failure handling)
 
 ### Allure Features Used
 
-- **@allure.feature()** - Groups tests by functionality
+- **@allure.feature()** - Groups tests by functionality (Hello World, Basic Tests, Failure Tests)
 - **@allure.story()** - Describes test scenarios
-- **@allure.severity()** - Sets test priority (BLOCKER, CRITICAL, NORMAL, MINOR, TRIVIAL)
-- **@allure.title()** - Custom test title
-- **with allure.step()** - Test execution steps
-- **allure.attach()** - Attaches data to reports
+- **@allure.severity()** - Sets test priority level
+- **@allure.title()** - Custom test title in report
+- **with allure.step()** - Test execution steps (visible in detailed report)
+- **allure.attach()** - Attaches test data and results to report
 
 ## 🔄 GitHub Actions Workflow
 
 The project includes an automated CI/CD pipeline that:
 
-1. ✅ Triggers on push and pull requests to `main` branch
+1. ✅ Triggers on push to `main` branch
 2. ✅ Sets up Python 3.11 environment
 3. ✅ Installs dependencies (pytest, allure-pytest)
 4. ✅ Runs all tests with Allure results collection
@@ -103,26 +98,16 @@ The project includes an automated CI/CD pipeline that:
 
 ## 📊 Reports
 
-### Local HTML Report
-After running tests locally with `--html=report.html`, open `report.html` in your browser.
-
-**Features:**
-- Test summary (passed/failed/skipped)
-- Detailed test results
-- Error messages and stack traces
-- Execution time metrics
-
 ### Allure Report (GitHub Actions)
-Automatically generated and accessible via:
+Automatically generated after each test run and accessible via:
 - **Artifacts**: Download from Actions tab
 - **GitHub Pages**: https://YOUR_USERNAME.github.io/pytest-allure-project/
 
 **Features:**
 - Test overview and statistics
 - Tests grouped by features and stories
-- Severity level filtering
-- Step-by-step test execution timeline
-- Attached data and screenshots
+- Detailed test execution results
+- Error messages and stack traces
 - Historical trend graphs
 
 ## 📝 Configuration
@@ -157,13 +142,16 @@ git push
 git remote -v
 
 # Run tests with verbose output
-pytest test_hello.py -v -s
+pytest test_hello.py -v
 
 # Run specific test
 pytest test_hello.py::test_hello_world -v
 
 # Run tests matching pattern
 pytest -k "hello" -v
+
+# Generate Allure results
+pytest test_hello.py --alluredir=allure-results -v
 ```
 
 ## 📚 Resources
