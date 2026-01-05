@@ -112,8 +112,19 @@ allure open allure-report
 ```
 
 ### GitHub Actions Reports
-- **On Push**: Test results are archived as artifacts for 30 days
-- **On Pull Request**: Automatic comment posted with test summary and report link
+
+**Downloading and Viewing Artifacts:**
+1. Go to Actions tab and select the workflow run
+2. Download `allure-report` artifact
+3. Extract the ZIP file
+4. Open the report using Python HTTP server:
+   ```bash
+   cd path/to/extracted/allure-report
+   python -m http.server 8000
+   ```
+5. Open browser: `http://localhost:8000`
+
+**Note:** The Allure report requires a web server due to JavaScript security restrictions. Direct opening of `index.html` won't work properly.
 
 ## 📝 Configuration
 
