@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+
+# Allure
+allure-results/
+allure-report/
+
+# Reports
+report.html
+combined.html
+assets/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
