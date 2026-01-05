@@ -9,7 +9,8 @@ This project showcases:
 - ✅ Allure decorators (feature, story, severity, title)
 - ✅ Allure steps and attachments in tests
 - ✅ GitHub Actions CI/CD automation
-- ✅ Allure report artifacts and GitHub Pages deployment
+- ✅ Automatic PR comments with Allure report summary
+- ✅ Test artifacts storage
 
 ## 🚀 Quick Start
 
@@ -81,34 +82,38 @@ The project includes 4 comprehensive test cases with full Allure integration:
 
 The project includes an automated CI/CD pipeline that:
 
-1. ✅ Triggers on push to `main` branch
+1. ✅ Triggers on push and pull requests to `main` branch
 2. ✅ Sets up Python 3.11 environment
 3. ✅ Installs dependencies (pytest, allure-pytest)
 4. ✅ Runs all tests with Allure results collection
 5. ✅ Generates Allure HTML report
-6. ✅ Uploads report as artifact (30 days retention)
-7. ✅ Deploys report to GitHub Pages
+6. ✅ Posts PR comment with test summary (on pull requests)
+7. ✅ Uploads report as artifact (30 days retention)
 
 ### View GitHub Actions Results
 
 1. Go to **Actions** tab on GitHub
 2. Click on the latest workflow run
 3. View test results and download artifacts
-4. Access the live Allure report on GitHub Pages
+4. On pull requests: Allure report summary is posted as a comment
 
 ## 📊 Reports
 
-### Allure Report (GitHub Actions)
-Automatically generated after each test run and accessible via:
-- **Artifacts**: Download from Actions tab
-- **GitHub Pages**: https://YOUR_USERNAME.github.io/pytest-allure-project/
+### Local Report Generation
+To generate reports locally:
 
-**Features:**
-- Test overview and statistics
-- Tests grouped by features and stories
-- Detailed test execution results
-- Error messages and stack traces
-- Historical trend graphs
+```bash
+# Run tests and generate Allure results
+pytest test_hello.py --alluredir=allure-results -v
+
+# Generate HTML report (requires Java/Allure CLI installed)
+allure generate allure-results --clean -o allure-report
+allure open allure-report
+```
+
+### GitHub Actions Reports
+- **On Push**: Test results are archived as artifacts for 30 days
+- **On Pull Request**: Automatic comment posted with test summary and report link
 
 ## 📝 Configuration
 
